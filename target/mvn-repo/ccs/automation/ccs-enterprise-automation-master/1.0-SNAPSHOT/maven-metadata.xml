@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>ccs.automation</groupId>
+  <artifactId>ccs-enterprise-automation-master</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20211214.143936</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20211214143936</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>1.0-20211214.143936-1</value>
+        <updated>20211214143936</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.0-20211214.143936-1</value>
+        <updated>20211214143936</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
