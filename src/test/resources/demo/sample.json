@@ -1,0 +1,83 @@
+{
+  "scenarioName": "GET the  api",
+  "steps": [
+    {
+      "name": "get-jagger",
+      "url": "/users?user-name=jaeggerbuy01@yopmail.com",
+      "method": "GET",
+      "request": {
+        "headers": {
+          "X-Consumer-ClientId": "z0sxo0FTuo7DJLIaggzw6CXqKoDamwUn",
+          "X-API-Key": "ti9fknzy6gtcsh6rdfzk5h611hjwdbzm"
+        }
+
+      },
+      "verify": {
+        "status": 201,
+        "body":{
+          "userName": "jaeggerbuy01@yopmail.com",
+          "organisationId": "154921635349715316",
+          "firstName": "Jaegger",
+          "lastName": "Buyer",
+          "title": 5,
+          "userDetailId": 995,
+          "rolePermissionInfo": [
+            {
+              "roleId": 3839,
+              "roleName": "Organisation User",
+              "roleKey": "ORG_DEFAULT_USER",
+              "serviceClientName": "Dashboard Service"
+            },
+            {
+              "roleId": 3843,
+              "roleName": "Jaegger Buyer",
+              "roleKey": "JAEGGER_BUYER",
+              "serviceClientName": "Login Director"
+            }
+          ],
+          "identityProviderId": [
+            3969
+          ],
+          "identityProviderDisplayName": [
+            "User ID and password"
+          ],
+          "additionalRoles": [],
+          "userContactPoints": [],
+          "organisationAddress": {
+            "streetAddress": "99 Holly Avenue, Jesmond",
+            "locality": "Newcastle Upon Tyne",
+            "region": "",
+            "postalCode": "NE2 2QB",
+            "countryCode": ""
+          },
+          "organisationDetail": {
+            "organisationId": "154921635349715316",
+            "creationDate": "27/10/2021",
+            "businessType": "Central Government",
+            "supplierBuyerType": 2,
+            "isSme": false,
+            "isVcse": false,
+            "rightToBuy": true,
+            "isActive": true
+          },
+          "organisationIdentifier": {
+            "scheme": "GB-COH",
+            "id": "02773506",
+            "legalName": "LOGIN LIMITED",
+            "uri": ""
+          },
+          "organisationAdditionalIdentifiers": [
+            {
+              "hidden": false,
+              "scheme": "GB-COH",
+              "id": "12711964",
+              "legalName": "BBC CHICKEN LTD",
+              "uri": ""
+            }
+          ]
+
+        }
+      }
+    }
+  ]
+}
