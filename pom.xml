@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>CCS-API-Master</artifactId>
-    <version>1.0-SNAPSHOT-Master-V.0</version>
+    <version>1.1-SNAPSHOT-Master</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -47,11 +47,22 @@
         <license.dir>${basedir}</license.dir>
     </properties>
 
-    <distributionManagement>
+    <!--distributionManagement>
         <repository>
             <id>internal</id>
             <url>file://${project.build.directory}/mvn-repo</url>
         </repository>
+    </distributionManagement-->
+    <distributionManagement>
+        <repository>
+            <id>nexus-snapshots</id>
+            <name>maven-releases</name>
+            <url>https://nexus.techopsdev.com/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://nexus.techopsdev.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <dependencies>
