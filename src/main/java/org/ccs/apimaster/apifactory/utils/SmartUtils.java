@@ -45,7 +45,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Singleton
 public class SmartUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(SmartUtils.class);
-
     @Inject
     private ObjectMapper mapper;
     @Inject
