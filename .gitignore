@@ -1,2 +1,11 @@
 
 target/CCS-API-Master-1.0.1.jar
+target/CCS-API-Master-1.0.2.jar
+*.class
+target/CCS-API-Master-1.1-SNAPSHOT-Master.jar
+target/classes/org/ccs/apimaster/apifactory/httpclient/BasicHttpClient.class
+target/classes/org/ccs/apimaster/apifactory/supportcenter/actionee/Step.class
+target/classes/org/ccs/apimaster/apifactory/utils/SmartUtils$1.class
+target/classes/org/ccs/apimaster/apifactory/utils/SmartUtils.class
+target/maven-archiver/pom.properties
+target/maven-archiver/pom.properties

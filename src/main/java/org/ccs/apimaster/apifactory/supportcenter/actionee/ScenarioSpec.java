@@ -22,23 +22,25 @@ import java.util.List;
 */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ScenarioSpec {
-
     private final Integer loop;
     private final Boolean ignoreStepFailures;
     private final String scenarioName;
     private final List<Step> steps;
     private final Parameterized parameterized;
+    private final String scenarioDesc;
 
     @JsonCreator
     public ScenarioSpec(
             @JsonProperty("stepLoop") Integer loop,
             @JsonProperty("ignoreStepFailures") Boolean ignoreStepFailures,
             @JsonProperty("scenarioName") String scenarioName,
+            @JsonProperty("scenarioDesc") String scenarioDesc,
             @JsonProperty("steps") List<Step> steps,
             @JsonProperty("parameterized") Parameterized parameterized) {
         this.loop = loop;
         this.ignoreStepFailures = ignoreStepFailures;
         this.scenarioName = scenarioName;
+        this.scenarioDesc = scenarioDesc;
         this.steps = steps;
         this.parameterized = parameterized;
     }
@@ -53,6 +55,9 @@ public class ScenarioSpec {
 
     public String getScenarioName() {
         return scenarioName;
+    }
+    public String getScenarioDesc() {
+        return scenarioDesc;
     }
 
     public List<Step> getSteps() {

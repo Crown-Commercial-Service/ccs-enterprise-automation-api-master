@@ -133,7 +133,13 @@ public class MasterAssertionsProcessorImpl implements MasterAssertionsProcessor 
                         String escapedJsonString = escapeJava(jsonAsString);
                         paramMap.put(thisPath, escapedJsonString);
                     } else {
-                        paramMap.put(thisPath, JsonPath.read(scenarioState, thisPath));
+                        if (jsonPathValue instanceof Long){
+                            String expectedJsonString = String.valueOf(jsonPathValue);
+                            paramMap.put(thisPath, expectedJsonString);
+                        }
+                        else{
+                            paramMap.put(thisPath, JsonPath.read(scenarioState, thisPath));
+                        }
                     }
                 }
 
