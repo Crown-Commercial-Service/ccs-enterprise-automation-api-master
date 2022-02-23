@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.ccs.apimaster.apifactory.httpclient.utils.MasterFileUploader.*;
+import static org.ccs.apimaster.apifactory.httpclient.utils.CCSMasterFileUploadUtil.*;
 import static org.ccs.apimaster.apifactory.httpclient.utils.HeaderManager.processFrameworkDefault;
 import static org.ccs.apimaster.apifactory.utils.HelperJsonUtils.getContentAsItIsJson;
 import static org.apache.http.entity.ContentType.APPLICATION_JSON;
@@ -196,14 +196,14 @@ public class BasicHttpClient {
         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
 
         if(fileFieldsList != null) {
-        	buildAllFilesToUpload(fileFieldsList, multipartEntityBuilder);
+        	buildAllFilesForUpload(fileFieldsList, multipartEntityBuilder);
 	}
 
-        buildOtherRequestParams(fileFieldNameValueMap, multipartEntityBuilder);
+        buildRequestTextParams(fileFieldNameValueMap, multipartEntityBuilder);
 
-        buildMultiPartBoundary(fileFieldNameValueMap, multipartEntityBuilder);
+        buildDelimiterForMultiPart(fileFieldNameValueMap, multipartEntityBuilder);
 
-        return createUploadRequestBuilder(httpUrl, methodName, multipartEntityBuilder);
+        return buildUploadRequest(httpUrl, methodName, multipartEntityBuilder);
     }
 
     public void handleHttpSession(Response serverResponse, String headerKey) {

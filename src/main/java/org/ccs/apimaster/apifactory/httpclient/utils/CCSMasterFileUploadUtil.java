@@ -32,15 +32,15 @@ import static org.apache.http.entity.ContentType.TEXT_PLAIN;
 @Author: Mibin Boban, CCS Senior QAT Analyst
 @Creation: 02/12/2021
 */
-public class MasterFileUploader {
+public class CCSMasterFileUploadUtil {
 
     /*
-    @Method: createUploadRequestBuilder
-    @Purpose: To create file upload request
+    @Method: buildUploadRequest
+    @Purpose: To build file upload request
     @Author: Mibin Boban, CCS Senior QAT Analyst
-    @Creation: 02/12/2021
+    @Creation: 23/02/2022
     */
-    public static RequestBuilder createUploadRequestBuilder(String httpUrl, String methodName, MultipartEntityBuilder multipartEntityBuilder) {
+    public static RequestBuilder buildUploadRequest(String httpUrl, String methodName, MultipartEntityBuilder multipartEntityBuilder) {
 
         RequestBuilder uploadRequestBuilder = RequestBuilder
                 .create(methodName)
@@ -54,23 +54,23 @@ public class MasterFileUploader {
     }
 
     /*
-   @Method: buildMultiPartBoundary
-   @Purpose: To create file upload request for multipart
-   @Author: Mibin Boban, CCS Senior QAT Analyst
-   @Creation: 02/12/2021
-   */
-    public static void buildMultiPartBoundary(Map<String, Object> fileFieldNameValueMap, MultipartEntityBuilder multipartEntityBuilder) {
-        String boundary = (String) fileFieldNameValueMap.get(BasicHttpClient.BOUNDARY_FIELD);
-        multipartEntityBuilder.setBoundary(boundary != null ? boundary : currentTimeMillis() + now().toString());
+      @Method: buildDelimiterForMultiPart
+      @Purpose: To create boundary or delimiter to separate data blocks
+      @Author: Mibin Boban, CCS Senior QAT Analyst
+      @Creation: 23/02/2022
+    */
+    public static void buildDelimiterForMultiPart(Map<String, Object> fileFieldNameValueMap, MultipartEntityBuilder multipartEntityBuilder) {
+        String delimiter = (String) fileFieldNameValueMap.get(BasicHttpClient.BOUNDARY_FIELD);
+        multipartEntityBuilder.setBoundary(delimiter != null ? delimiter : currentTimeMillis() + now().toString());
     }
 
     /*
-   @Method: buildAllFilesToUpload
-   @Purpose: To build files for upload operation
+   @Method: buildAllFilesForUpload
+   @Purpose: To fetch and build file bodies for upload as part of request
    @Author: Mibin Boban, CCS Senior QAT Analyst
-   @Creation: 02/12/2021
+   @Creation: 23/02/2022
    */
-    public static void buildAllFilesToUpload(List<String> fileFiledsList, MultipartEntityBuilder multipartEntityBuilder) {
+    public static void buildAllFilesForUpload(List<String> fileFiledsList, MultipartEntityBuilder multipartEntityBuilder) {
         fileFiledsList.forEach(fileField -> {
             String[] fieldNameValue = fileField.split(":");
             String fieldName = fieldNameValue[0];
@@ -82,12 +82,12 @@ public class MasterFileUploader {
     }
 
     /*
-   @Method: buildOtherRequestParams
-   @Purpose: To build request params for file upload
+   @Method: buildRequestTextParams
+   @Purpose: To build request params in text plain format for file upload
    @Author: Mibin Boban, CCS Senior QAT Analyst
-   @Creation: 02/12/2021
+   @Creation: 23/02/2022
    */
-    public static void buildOtherRequestParams(Map<String, Object> fileFieldNameValueMap, MultipartEntityBuilder multipartEntityBuilder) {
+    public static void buildRequestTextParams(Map<String, Object> fileFieldNameValueMap, MultipartEntityBuilder multipartEntityBuilder) {
         for (Map.Entry<String, Object> entry : fileFieldNameValueMap.entrySet()) {
             if (entry.getKey().equals(BasicHttpClient.FILES_FIELD) || entry.getKey().equals(BasicHttpClient.BOUNDARY_FIELD)) {
                 continue;
@@ -106,7 +106,7 @@ public class MasterFileUploader {
             return filePath;
         }
 
-        ClassLoader classLoader = MasterFileUploader.class.getClassLoader();
+        ClassLoader classLoader = CCSMasterFileUploadUtil.class.getClassLoader();
         URL resource = classLoader.getResource(filePath);
         if (resource == null) {
             throw new RuntimeException("Could not get details of file or folder - `" + filePath + "`, does this exist?");
