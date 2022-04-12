@@ -28,8 +28,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.ccs.apimaster.apifactory.coreactions.tokens.MasterAssertionTokens.*;
+import static org.ccs.apimaster.apifactory.coreactions.tokens.MasterValueTokens.$VALINT;
 import static org.ccs.apimaster.apifactory.coreactions.tokens.MasterValueTokens.$VALUE;
 import static org.ccs.apimaster.apifactory.utils.SmartUtils.isValidAbsolutePath;
 import static org.ccs.apimaster.apifactory.utils.TokenUtils.getTestCaseTokens;
@@ -113,7 +115,7 @@ public class MasterAssertionsProcessorImpl implements MasterAssertionsProcessor 
     @Override
     public String manageJsonPaths(String jsonString, String scenarioState) {
         List<String> jsonPaths = getAllJsonPathTokens(jsonString);
-        Map<String, String> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<>();
         final String LEAF_VAL_REGEX = "\\$[.](.*)\\$VALUE\\[\\d\\]";
 
         jsonPaths.forEach(thisPath -> {
@@ -125,8 +127,11 @@ public class MasterAssertionsProcessorImpl implements MasterAssertionsProcessor 
 
                 } else if (thisPath.matches(LEAF_VAL_REGEX) || thisPath.endsWith($VALUE)) {
                     resolveLeafOnlyNodeValue(scenarioState, paramMap, thisPath);
-
-                } else {
+                }
+                else if(thisPath.endsWith($VALINT)){
+                    resolveIntLeafOnlyNodeValue(scenarioState, paramMap, thisPath);
+                }
+                else {
                     Object jsonPathValue = JsonPath.read(scenarioState, thisPath);
                     if (isPathValueJson(jsonPathValue)) {
                         final String jsonAsString = objMapper.writeValueAsString(jsonPathValue);
@@ -142,15 +147,14 @@ public class MasterAssertionsProcessorImpl implements MasterAssertionsProcessor 
                         }
                     }
                 }
-
             } catch (Exception e) {
                 throw new RuntimeException("\nJSON:" + jsonString + "\nPossibly comments in the JSON found or bad JSON path found: " + thisPath + ",\nDetails: " + e);
             }
         });
-
+        String finalJsonString = handleIntAssertions(jsonPaths,jsonString);
         StrSubstitutor sub = new StrSubstitutor(paramMap);
 
-        return sub.replace(jsonString);
+        return sub.replace(finalJsonString);
     }
 
     /*
@@ -393,7 +397,7 @@ public class MasterAssertionsProcessorImpl implements MasterAssertionsProcessor 
     private void loadAnnotatedHostProperties() {
         try {
             if(isValidAbsolutePath(hostFileName)){
-               loadAbsoluteProperties(hostFileName, frmPropertyValues);
+                loadAbsoluteProperties(hostFileName, frmPropertyValues);
             } else {
                 frmPropertyValues.load(getClass().getClassLoader().getResourceAsStream(hostFileName));
             }
@@ -422,17 +426,43 @@ public class MasterAssertionsProcessorImpl implements MasterAssertionsProcessor 
         return jsonPathValue instanceof LinkedHashMap || jsonPathValue instanceof JSONArray;
     }
 
-    void resolveLeafOnlyNodeValue(String scenarioState, Map<String, String> paramMap, String thisPath) {
+    void resolveLeafOnlyNodeValue(String scenarioState, Map<String, Object> paramMap, String thisPath) {
         String actualPath = thisPath.substring(0, thisPath.indexOf($VALUE));
         int index = findArrayIndex(thisPath, actualPath);
 
         List<String> leafValuesAsArray = JsonPath.read(scenarioState, actualPath);
-        paramMap.put(thisPath, leafValuesAsArray.get(index));
+        Object val = leafValuesAsArray.get(index);
+        paramMap.put(thisPath, val);
+    }
+    void resolveIntLeafOnlyNodeValue(String scenarioState, Map<String, Object> paramMap, String thisPath) {
+        String actualPath = thisPath.substring(0, thisPath.indexOf($VALINT));
+        int index = findIntArrayIndex(thisPath, actualPath);
+        List<Integer> leafValuesAsArray = JsonPath.read(scenarioState, actualPath);
+        Object val = leafValuesAsArray.get(index);
+
+        paramMap.put(thisPath, val);
     }
 
+    private String handleIntAssertions(List<String> jsonPath,String jsonString){
+        for (String path : jsonPath) {
+            if(path.endsWith($VALINT)){
+                path = "[\"${"+path+"}\"]";
+                String revisedPath = path.replace("\"", "");
+                jsonString=jsonString.replace(path,revisedPath);
+            }
+        }
+        return jsonString;
+    }
     private int findArrayIndex(String thisPath, String actualPath) {
         String valueExpr = thisPath.substring(actualPath.length());
         if ($VALUE.equals(valueExpr)) {
+            return 0;
+        }
+        return Integer.parseInt(substringBetween(valueExpr, "[", "]"));
+    }
+    private int findIntArrayIndex(String thisPath, String actualPath) {
+        String valueExpr = thisPath.substring(actualPath.length());
+        if ($VALINT.equals(valueExpr)) {
             return 0;
         }
         return Integer.parseInt(substringBetween(valueExpr, "[", "]"));

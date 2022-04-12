@@ -36,6 +36,7 @@ public class MasterValueTokens {
     public static final String SYSTEM_PROPERTY = "SYSTEM.PROPERTY:";
     public static final String SYSTEM_ENV = "SYSTEM.ENV:";
     public static final String $VALUE = ".$VALUE";
+    public static final String $VALINT = ".$VALINT";
     public static final String ABS_PATH = "ABS.PATH:";
 
     public static List<String> getKnownTokens() {
