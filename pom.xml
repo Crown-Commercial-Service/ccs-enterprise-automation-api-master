@@ -6,7 +6,7 @@
 
     <groupId>org.ccs</groupId>
     <artifactId>CCS-API-Master</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -45,15 +45,17 @@
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
         <google.protobuf.version>3.13.0</google.protobuf.version>
         <license.dir>${basedir}</license.dir>
+        <github.global.server>github</github.global.server>
+        <deploy.directory>/Users/mibin.boban/Documents/Solutions/ccs-enterprise-automation/mvn-repo</deploy.directory>
     </properties>
 
-    <!--distributionManagement>
+    <distributionManagement>
         <repository>
             <id>internal</id>
-            <url>file://${project.build.directory}/mvn-repo</url>
+            <url>file://${deploy.directory}</url>
         </repository>
-    </distributionManagement-->
-    <distributionManagement>
+    </distributionManagement>
+    <!--distributionManagement>
         <repository>
             <id>nexus-snapshots</id>
             <name>maven-releases</name>
@@ -63,7 +65,7 @@
             <id>nexus-snapshots</id>
             <url>https://nexus.techopsdev.com/repository/maven-snapshots/</url>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement-->
 
     <dependencies>
         <dependency>
@@ -305,15 +307,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>3.0.0-M1</version>
-                <executions>
-                    <execution>
-                        <id>default-deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <configuration>
+                    <altDeploymentRepository>internal.repo::default::file://${deploy.directory}</altDeploymentRepository>
+                </configuration>
             </plugin>
         </plugins>
     </build>
