@@ -6,7 +6,7 @@
 
     <groupId>org.ccs</groupId>
     <artifactId>CCS-API-Master</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.9b</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

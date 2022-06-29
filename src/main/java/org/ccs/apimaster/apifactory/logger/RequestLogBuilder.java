@@ -119,8 +119,8 @@ public class RequestLogBuilder {
                 "\nstep:" + stepName +
                 "\nid:" + id +
                 "\nurl:" + url +
-                "\nmethod:" + method +
-                "\nrequest:\n" + request;
+                "\nmethod:" + method;// +
+               // "\nrequest:\n" + request;
     }
 
 

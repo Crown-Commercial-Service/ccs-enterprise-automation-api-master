@@ -127,7 +127,7 @@ public class MasterReportGeneratorImpl implements MasterReportGenerator {
                         step.pass(thisStep.getResult());
                     } else {
                         step.info(MarkupHelper.createCodeBlock(thisStep.getOperation() + "\t" + thisStep.getUrl()));
-                        step.info(MarkupHelper.createCodeBlock(thisStep.getRequest(), CodeLanguage.JSON));
+                        //step.info(MarkupHelper.createCodeBlock(thisStep.getRequest(), CodeLanguage.JSON));
                         step.info(MarkupHelper.createCodeBlock(thisStep.getResponse(), CodeLanguage.JSON));
                         step.fail(MarkupHelper.createCodeBlock("Reason:\n" + thisStep.getAssertions()));
                     }
