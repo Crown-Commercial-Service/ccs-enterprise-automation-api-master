@@ -31,15 +31,15 @@ public class FieldIsOneOfValueAsserter implements JsonAsserter {
    */
 	@Override
 	public FieldAssertionMatcher assertActualToExpected(Object actualResult) {
-		boolean areEqual;
+		boolean areEqual = false;
 
 		if (expected != null) {
-            String expectedString = substringBetween((String) expected, "[", "]");
+            String expectedString = substringBetween((String) expected, "(", ")");
 
 			String[] expectedArray = null;
 
 			if (!expectedString.isEmpty()) {
-				expectedArray = expectedString.split(",");
+				expectedArray = expectedString.split("\\|");
 			} else {
 				expectedArray = new String[] {};
 			}
@@ -50,7 +50,14 @@ public class FieldIsOneOfValueAsserter implements JsonAsserter {
 			}
 
 			if (actualResult != null) {
-				areEqual = Arrays.asList(expectedArray).contains(actualResult);
+				//areEqual = Arrays.asList(expectedArray).contains(actualResult);
+				for (int i = 0; i < expectedArray.length; i++) {
+					if(actualResult.toString().contentEquals(expectedArray[i])){
+						areEqual = true;
+						break;
+					}
+				}
+				
 			} else {
 				areEqual = false;
 			}
