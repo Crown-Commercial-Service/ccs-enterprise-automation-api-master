@@ -167,7 +167,7 @@ public class Step {
         this.method = method != null? method : operation;
         this.request = request;
         this.url = url;
-        this.assertions = assertions.isNull() ? verify : assertions;
+        this.assertions = assertions != null? assertions : verify;
         this.verify = verify;
         this.ignoreStep = ignoreStep;
     }
