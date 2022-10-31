@@ -6,7 +6,7 @@
 
     <groupId>org.ccs</groupId>
     <artifactId>CCS-API-Master</artifactId>
-    <version>1.0.9.i</version>
+    <version>1.0.9.j</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -16,6 +16,7 @@
         <junit-platform-runner.version>1.4.2</junit-platform-runner.version>
         <junit.version>4.12</junit.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
+        <jackson.version>2.13.4</jackson.version>
         <guava.version>23.0</guava.version>
         <jsonassert.version>1.5.0</jsonassert.version>
         <classpath-explorer.version>1.0</classpath-explorer.version>
@@ -182,12 +183,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-databind.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${jackson-databind.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -197,7 +198,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
-            <version>${jackson-databind.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
