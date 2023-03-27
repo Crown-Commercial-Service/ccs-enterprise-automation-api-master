@@ -23,7 +23,7 @@
         <jukito.version>1.4.1</jukito.version>
         <guice.version>4.0</guice.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <jayway-version>2.2.0</jayway-version>
+        <jayway-version>2.8.0</jayway-version>
         <resteasy-jaxrs.version>2.2.1.GA</resteasy-jaxrs.version>
         <logback.version>1.0.7</logback.version>
         <wiremock.version>2.19.0</wiremock.version>
